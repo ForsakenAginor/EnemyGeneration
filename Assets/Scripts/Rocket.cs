@@ -5,9 +5,8 @@ using UnityEngine;
 [RequireComponent (typeof(BoxCollider2D))]
 public class Rocket : MonoBehaviour
 {
+    [SerializeField] private float _speed;
     [SerializeField] private ParticleSystem _detonateEffect;
-
-    private readonly float _speed = 3;
 
     public Transform Target { get; set; }
 
