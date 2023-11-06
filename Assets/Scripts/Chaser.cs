@@ -3,16 +3,21 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent (typeof(BoxCollider2D))]
-public class Rocket : MonoBehaviour
+public class Chaser : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private ParticleSystem _detonateEffect;
 
-    public Transform Target { get; set; }
+    private Transform _target;
+
+    public void SetTarget(Transform target)
+    {
+        _target = target;
+    }
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, Time.deltaTime * _speed);
+        transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * _speed);
         RotateToTarget();
     }
 
@@ -20,12 +25,12 @@ public class Rocket : MonoBehaviour
     {
         float PiInDegrees = 180;
         transform.rotation = Quaternion.identity;
-        float tangens = (Target.transform.position.x - transform.position.x) / (Target.transform.position.y - transform.position.y);
+        float tangens = (_target.transform.position.x - transform.position.x) / (_target.transform.position.y - transform.position.y);
         float angle = math.atan(tangens) * PiInDegrees / math.PI;
 
-        if (angle < 0 && Target.transform.position.x > transform.position.x)
+        if (angle < 0 && _target.transform.position.x > transform.position.x)
             angle = PiInDegrees + angle;
-        else if (angle > 0 && Target.transform.position.x < transform.position.x)
+        else if (angle > 0 && _target.transform.position.x < transform.position.x)
             angle = angle - PiInDegrees;
 
         transform.Rotate(new Vector3(0, 0, 0 - angle));

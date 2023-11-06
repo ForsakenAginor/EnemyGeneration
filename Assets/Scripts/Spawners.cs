@@ -19,8 +19,8 @@ public class Spawners : MonoBehaviour
         {
             _runningTime = 0;
 
-            if(_spawners != null && _spawners.Length > 0)
-                _spawners[RandomNumbersGenerator.GenerateRandomNumber(_spawners.Length)].SpawnCreature();
+            if(_spawners != null && _spawners.Length > 0)            
+                _spawners[Random.Range(0, _spawners.Length)].SpawnCreature();            
         }
     }
 }

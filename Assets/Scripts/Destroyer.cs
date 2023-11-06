@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Explosion : MonoBehaviour
+public class Destroyer : MonoBehaviour
 {
-    private void Awake()
+    private void Start()
     {
         Destroy(gameObject, 5f);
     }
