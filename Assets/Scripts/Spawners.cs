@@ -1,26 +1,30 @@
+using System.Collections;
 using UnityEngine;
 
 public class Spawners : MonoBehaviour
 {
     private readonly float _spawnFrequency = 2;
     private Spawner[] _spawners;
-    private float _runningTime;
+    private bool _isSpawning = true;
 
     private void Awake()
     {
         _spawners = GetComponentsInChildren<Spawner>();
     }
 
-    private void Update()
+    private void Start()
     {
-        _runningTime += Time.deltaTime;
+        var spawner = StartCoroutine(Spawn());
+    }
 
-        if (_runningTime >= _spawnFrequency)
+    private IEnumerator Spawn()
+    {
+        while (_isSpawning)
         {
-            _runningTime = 0;
+            if (_spawners != null && _spawners.Length > 0)
+                _spawners[Random.Range(0, _spawners.Length)].SpawnCreature();
 
-            if(_spawners != null && _spawners.Length > 0)            
-                _spawners[Random.Range(0, _spawners.Length)].SpawnCreature();            
+            yield return new WaitForSeconds(_spawnFrequency);
         }
     }
 }
